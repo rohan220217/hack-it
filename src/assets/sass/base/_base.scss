@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;500;600;700;800&display=swap");
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  // @media only screen and (max-width: $bp-large) {
+  //   font-size: 50%;
+  // }
+  // @media only screen and (max-width: $bp-smallest) {
+  //   font-size: 40%;
+  // }
+}
+
+body {
+  box-sizing: border-box;
+}
+
+#root {
+  //   overflow: hidden;
+  min-height: 100vh;
+  backdrop-filter: blur(30px);
+  background: $color-white-light-1;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.disabled-link {
+  pointer-events: none;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: $color-black;
+}
+
+::file-selector-button {
+  display: none;
+}
+

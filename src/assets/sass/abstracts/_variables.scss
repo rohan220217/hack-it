@@ -1,0 +1,56 @@
+// COLORS
+$color-primary: #1182c1;
+$color-secondary: #36cdcf;
+$color-blue: #037dfc;
+$color-red: #f77272;
+$color-hover-background: #f1ffe2;
+$color-danger-hover-background: #ff99990d;
+$color-yellow: #ffb12a;
+// Black shades
+$color-black: #000;
+$color-black-light-1: #394759;
+$color-black-light-2: #567191;
+$color-black-light-3: #8193a8;
+
+// White
+$color-white: #fff;
+$color-grey: #ededed;
+$color-white-light-1: #ffffffcc;
+
+// github scale
+$github-0: #eeeeee;
+$github-1: #d6e685;
+$github-2: #8cc665;
+$github-3: #44a340;
+$github-4: #1e6823;
+
+// Border color
+$color-border: #e5fdbe;
+
+// Gradient
+$primary-gradient: linear-gradient(
+  to right,
+  #1fa2ff 0%,
+  #12d8fa 51%,
+  #1fa2ff 100%
+);
+
+$danger-gradient: linear-gradient(115.94deg, #f75a92 -12.55%, #ff9a9a 112.61%);
+
+$warning-gradient: linear-gradient(135deg, #ffcf4f 0%, #ff9b4a 100%);
+$light-gradient: #ffb12a14;
+$background-gradient: radial-gradient(
+  circle farthest-corner at 50.7% 54%,
+  rgba(204, 254, 152, 1) 0%,
+  rgba(229, 253, 190, 1) 92.4%
+);
+
+// FONT
+$default-font-size: 1.6rem;
+
+// Responsiveness
+$bp-largest: 75em; // 1200px
+$bp-large: 68.75em; // 1100px
+// $bp-medium: 59.3em;   // 900px flexible
+$bp-small: 43.75em; // 700px
+$bp-smallest: 34.3em; // 550px
