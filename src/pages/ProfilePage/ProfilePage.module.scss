@@ -1,0 +1,27 @@
+.container {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  .tabs {
+    width: 100%;
+
+    .tabList {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid #aaa;
+      margin: 0 0 1rem;
+      padding: 0;
+    }
+  }
+  .content {
+    display: grid;
+  grid-template-columns: 1fr 1fr;	
+  gap: 1rem;
+    // display: flex;
+    // img{
+    //     display: flex;
+    // }
+  }
+}

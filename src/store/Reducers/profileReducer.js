@@ -9,6 +9,17 @@ import {
   VERIFY_OTP_USER_SUCCESS,
   VERIFY_OTP_USER_FAILURE,
 } from "../Constants/loginTypes";
+import {
+  GET_LOGGED_USER_REQUEST,
+  GET_LOGGED_USER_RECEIVED,
+  GET_LOGGED_USER_FAILED,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_RECEIVED,
+  CHANGE_PASSWORD_FAILED,
+  CHANGE_USER_DATA_REQUEST,
+  CHANGE_USER_DATA_RECEIVED,
+  CHANGE_USER_DATA_FAILED,
+} from "../Constants/userTypes";
 
 var localStorageToken = localStorage.getItem("hack-it-token");
 var localStorageName = localStorage.getItem("hack-it-name");
@@ -25,9 +36,15 @@ const initialState = {
   mobile: localStorageMobile ? localStorageMobile : "",
   isLoginLoading: false,
   isVerifyUserLoading: false,
+
+  loggedUserDetails: {},
+  loggedUserDetailsLoading: false,
+
+  changePasswordLoading: false,
+  changeUserDataLoading: false,
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER_TYPE:
       return { ...state, userType: action.payload };
@@ -85,6 +102,46 @@ export const loginReducer = (state = initialState, action) => {
         name: "",
         mobile: "",
       };
+
+    case GET_LOGGED_USER_REQUEST:
+      return { ...state, loggedUserDetailsLoading: true };
+
+    case GET_LOGGED_USER_RECEIVED:
+      return {
+        ...state,
+        loggedUserDetails: action.payload,
+        loggedUserDetailsLoading: false,
+      };
+
+    case GET_LOGGED_USER_FAILED:
+      return { ...state, loggedUserDetailsLoading: false };
+
+    case CHANGE_PASSWORD_REQUEST:
+      return { ...state, changePasswordLoading: true };
+
+    case CHANGE_PASSWORD_RECEIVED:
+      action.payload(false);
+      return {
+        ...state,
+        changePasswordLoading: false,
+      };
+
+    case CHANGE_PASSWORD_FAILED:
+      return { ...state, changePasswordLoading: false };
+
+    case CHANGE_USER_DATA_REQUEST:
+      return { ...state, changeUserDataLoading: true };
+
+    case CHANGE_USER_DATA_RECEIVED:
+      action.payload.setChangeUser(false);
+      return {
+        ...state,
+        loggedUserDetails: action.payload.data,
+        changeUserDataLoading: false,
+      };
+
+    case CHANGE_USER_DATA_FAILED:
+      return { ...state, changeUserDataLoading: false };
 
     default:
       return state;

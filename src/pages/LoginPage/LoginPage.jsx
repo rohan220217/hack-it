@@ -16,7 +16,7 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const loginState = useSelector((state) => state.loginReducer);
+  const loginState = useSelector((state) => state.profileReducer);
 
   const [value, setValue] = useState({
     mobno: "",

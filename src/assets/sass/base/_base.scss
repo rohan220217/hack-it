@@ -66,3 +66,12 @@ input::-webkit-inner-spin-button {
   display: none;
 }
 
+.react-tabs__tab-panel {
+  margin: 0 1rem;
+}
+
+.react-tabs__tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
