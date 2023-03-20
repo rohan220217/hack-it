@@ -4,14 +4,25 @@ import styles from "./HomePage.module.scss";
 import BackgroundImage from "../../assets/background.png";
 import { useState } from "react";
 import Carousel from "react-simply-carousel";
+import Sheet from "react-modal-sheet";
 
 function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <div>
       {" "}
       <AppBar title="Home Page" />
+      <button onClick={() => setOpen(true)}>Open sheet</button>
+      <Sheet isOpen={isOpen} onClose={() => setOpen(false)} detent="content-height">
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>{/* Your sheet content goes here */}</Sheet.Content>
+        </Sheet.Container>
+
+        <Sheet.Backdrop />
+      </Sheet>
       <div className={styles.background}>
         <img src={BackgroundImage} alt="background image" />
         <h2>Welcome back,</h2>
