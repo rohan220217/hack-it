@@ -14,20 +14,3 @@
     }
   }
 }
-
-.container {
-  padding: 1rem;
-  .buttons {
-    display: flex;
-    gap: 2rem;
-
-    .backButton {
-      background-color: #8E8E8E !important;
-     
-    }
-  }
-
-  & p{
-    text-align: center;
-  }
-}

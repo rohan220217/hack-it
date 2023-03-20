@@ -7,9 +7,14 @@ import { uploadFile } from "../../services/upload.services";
 import Spinner from "../../components/Spinner/Spinner";
 import Button from "../../components/Button/Button";
 import styles from "./CameraPage.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { postComplain } from "../../store/Actions/postAction";
 
 function CameraPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const postState = useSelector((state) => state.postReducer);
+
   const [data, setData] = useState({
     photo: null,
     longitude: "",
@@ -37,10 +42,10 @@ function CameraPage() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.DataUrl,
     });
     setIsLoading(true);
-    uploadFile({ file: image.base64String })
+    uploadFile({ file: image.dataUrl })
       .then((data) => {
         setData((prev) => ({
           ...prev,
@@ -55,11 +60,26 @@ function CameraPage() {
       });
   };
 
-  useEffect(() => {
+  const handleConfirm = () => {
+    const payload = {
+      longitude: data.longitude,
+      latitude: data.latitude,
+      contents: [data.photo],
+      ip_address: "192.168.1.1",
+    };
+    dispatch(postComplain({ payload, navigate }));
+    // navigate("/complain");
+  };
+
+  const runInitially = () => {
     printCurrentPosition();
     takePhoto();
+  };
+
+  useEffect(() => {
+    runInitially();
   }, []);
-  console.log(data);
+
   return (
     <>
       <AppBar title="Upload complain image" />
@@ -70,16 +90,32 @@ function CameraPage() {
       ) : (
         <div className={styles.container}>
           {data.photo ? (
-            <div>
+            <>
               <img
                 src={`http://172.99.249.65:3200/${data.photo}`}
                 alt="captured by camera"
                 width="100%"
               />
-              <Button onClick={() => navigate("/complain")}>Confirm</Button>
-            </div>
+              <div className={styles.buttons}>
+                <Button
+                  onClick={() => navigate(-1)}
+                  className={styles.backButton}
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={() => handleConfirm()}
+                  loading={postState.postLoading}
+                >
+                  Confirm
+                </Button>
+              </div>
+            </>
           ) : (
-            <span>There is no picture yet.</span>
+            <>
+              <p>There is no picture yet.</p>
+              <Button onClick={() => runInitially()}>Retake</Button>
+            </>
           )}
         </div>
       )}

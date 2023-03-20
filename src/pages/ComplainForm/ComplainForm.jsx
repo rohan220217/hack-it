@@ -5,8 +5,20 @@ import { complainFormSingleValidation } from "../../utils/validation";
 import Select from "react-select";
 import AppBar from "../../components/AppBar/AppBar";
 import Button from "../../components/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getSingleComplain,
+  updateSingleComplain,
+} from "../../store/Actions/postAction";
+import { json, useNavigate, useParams } from "react-router-dom";
 
 function ComplainForm() {
+  const postState = useSelector((state) => state.postReducer);
+  const dispatch = useDispatch();
+  const { groupId, id } = useParams();
+  const navigate = useNavigate();
+
+  console.log("postState", postState.currentSinglePostDetail);
   const [value, setValue] = useState({
     caption: "",
     category: "",
@@ -31,10 +43,10 @@ function ComplainForm() {
   ];
 
   const categoryOption = [
-    { value: "Garbage", label: "Garbage" },
-    { value: "Pothole", label: "Pothole" },
-    { value: "Sewage", label: "Sewage" },
-    { value: "Water", label: "Water" },
+    { value: "garbage", label: "garbage" },
+    { value: "pothole", label: "pothole" },
+    { value: "sewage", label: "sewage" },
+    { value: "water", label: "water" },
   ];
 
   const tagChange = (selectedOption) => {
@@ -48,11 +60,23 @@ function ComplainForm() {
     });
   };
 
+  useEffect(() => {
+    dispatch(getSingleComplain({ id, setValue }));
+  }, []);
+
   console.log(value);
+
   return (
     <>
       <AppBar title="Complain form" />
       <div className={styles.form}>
+        {postState.currentSinglePostDetail?.contents?.length && (
+          <img
+            src={`http://172.99.249.65:3200/${postState.currentSinglePostDetail?.contents?.[0]}`}
+            alt="captured by camera"
+            width="100%"
+          />
+        )}
         <div className={styles.mobile}>
           <p>Caption: </p>
           <Input
@@ -75,7 +99,7 @@ function ComplainForm() {
         <div className={styles.name}>
           <p>Category: </p>
           <Select
-            // defaultValue={value.defaultLevel}
+            defaultValue={value.category}
             onChange={categoryChange}
             options={categoryOption}
             placeholder="Select your category"
@@ -104,7 +128,7 @@ function ComplainForm() {
         <div className={styles.name}>
           <p>Tags: </p>
           <Select
-            // defaultValue={value.defaultLevel}
+            defaultValue={value.tags}
             isMulti
             onChange={tagChange}
             options={tagsOption}
@@ -131,7 +155,15 @@ function ComplainForm() {
             {errors && errors["tags"] ? errors["tags"][0] : ""}
           </p>
         </div>
-        <Button className={styles.submit}>Post</Button>
+        <Button
+          className={styles.submit}
+          loading={postState.updateSinglePostLoading}
+          onClick={() =>
+            dispatch(updateSingleComplain({ value, id, navigate }))
+          }
+        >
+          Post
+        </Button>
       </div>
     </>
   );

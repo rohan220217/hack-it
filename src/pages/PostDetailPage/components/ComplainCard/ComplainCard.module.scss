@@ -1,0 +1,85 @@
+.card {
+  background: linear-gradient(359.68deg, #fdfdfd -19.18%, #fdfdfd 16.23%);
+  box-shadow: 0px 7px 95px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem;
+    .tile {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+      }
+
+      h1 {
+        font-weight: 700;
+        color: #262626;
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-weight: 500;
+        color: #262626;
+        font-size: 1.3rem;
+      }
+    }
+  }
+  .contentImage {
+    width: 100%;
+    max-height: 25rem;
+  }
+
+  .cardbody {
+    padding: 0 1rem;
+    h4 {
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+    h3 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      text-overflow: ellipsis;
+      width: 35rem;
+    }
+    p {
+      color: #8e8e8e;
+      font-weight: 500;
+    }
+  }
+  .cardfooter {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .cardfooterGroup {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .cardFooterStatus {
+      border-radius: 5px;
+      padding: 0.2rem 0.8rem;
+    }
+    .PENDING {
+      border: 2px solid #d09700;
+      color: #d09700;
+    }
+    .IN_PROGRESS {
+      border: 2px solid #035755;
+      color: #035755;
+    }
+    .CLOSED {
+      border: 2px solid #fa5652;
+      color: #fa5652;
+    }
+  }
+}
