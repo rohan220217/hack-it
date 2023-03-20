@@ -1,24 +1,73 @@
-import { useNavigate } from "react-router-dom";
-import { Camera, CameraResultType } from "@capacitor/camera";
-import { Geolocation } from "@capacitor/geolocation";
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../store/Actions/loginAction";
 import AppBar from "../../components/AppBar/AppBar";
+import styles from "./HomePage.module.scss";
+import BackgroundImage from "../../assets/background.png";
+import { useState } from "react";
+import Carousel from "react-simply-carousel";
 
 function HomePage() {
-  const dispatch = useDispatch();
-
-  const onLogout = () => {
-    dispatch(logoutUser());
-  };
+  const [activeSlide, setActiveSlide] = useState(0);
 
   return (
-    <>
-      <AppBar  title="Home Page"/>
+    <div>
+      {" "}
+      <AppBar title="Home Page" />
+      <div className={styles.background}>
+        <img src={BackgroundImage} alt="background image" />
+        <h2>Welcome back,</h2>
+        <h1>Rohan Kumar</h1>
 
-      <button onClick={onLogout}>Logout</button>
-    </>
+        <div className={styles.carousel}>
+          <Carousel
+            containerProps={{
+              style: {
+                width: "100%",
+                userSelect: "none",
+              },
+            }}
+            preventScrollOnSwipe
+            swipeTreshold={60}
+            activeSlideIndex={activeSlide}
+            activeSlideProps={{
+              style: {
+                background: "blue",
+              },
+            }}
+            onRequestChange={setActiveSlide}
+            dotsNav={{
+              show: true,
+              itemBtnProps: {
+                style: {
+                  height: 8,
+                  width: 8,
+                  borderRadius: "50%",
+                  border: 0,
+                },
+              },
+              activeItemBtnProps: {
+                style: {
+                  height: 8,
+                  width: 8,
+                  borderRadius: "50%",
+                  border: 0,
+                  background: "black",
+                },
+              },
+            }}
+            itemsToShow={1}
+            speed={400}
+          >
+            {[
+              "https://jankalyanfile.rajasthan.gov.in//Content/UploadFolder/DepartmentMaster/951/2023/Feb/31406/174015.jpeg",
+              "https://jankalyanfile.rajasthan.gov.in//Content/UploadFolder/DepartmentMaster/951/2023/Feb/31406/174015.jpeg",
+              "https://jankalyanfile.rajasthan.gov.in//Content/UploadFolder/DepartmentMaster/951/2023/Feb/31406/174505.jpeg",
+            ].map((link, index) => (
+              <img src={link} alt="gov 1" width="100%" />
+            ))}
+          </Carousel>
+        </div>
+      </div>
+    </div>
   );
 }
 

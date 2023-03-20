@@ -52,7 +52,6 @@ function PostDetailPage() {
               },
             }}
             onRequestChange={setActiveSlide}
-            autoplay={true}
             
             dotsNav={{
               show: true,

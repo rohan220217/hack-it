@@ -6,6 +6,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import AppBar from "../../components/AppBar/AppBar";
 import Spinner from "../../components/Spinner/Spinner";
+import Button from "../../components/Button/Button";
+import { logoutUser } from "../../store/Actions/loginAction";
 import { getLoggedUser } from "../../store/Actions/userAction";
 import EditProfile from "./components/EditProfile/EditProfile";
 import styles from "./ProfilePage.module.scss";
@@ -24,6 +26,10 @@ function ProfilePage() {
     setShowEditModal(true);
   };
 
+  const onLogout = () => {
+    dispatch(logoutUser());
+  };
+
   useEffect(() => {
     dispatch(getLoggedUser());
   }, []);
@@ -33,17 +39,26 @@ function ProfilePage() {
       <AppBar title="Profile page" />
       {userState.loggedUserDetailsLoading ? (
         <div className={styles.loaderContainer}>
-          <Spinner className={styles.loader}/>
+          <Spinner className={styles.loader} />
         </div>
       ) : (
-        <>
-          <button onClick={handleOpenModal}>Edit</button>
-          <p>
+        <div className={styles.body}>
+          <div className={styles.avatar}>
+            <img
+              src="https://thumbs.dreamstime.com/b/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg"
+              alt="avatar"
+            />
+          </div>
+          <h2>
             <b>Name: </b> {userState.loggedUserDetails.name}
-          </p>
-          <p>
+          </h2>
+          <h2>
             <b>Mobile: </b> {userState.loggedUserDetails.mobile}
-          </p>
+          </h2>
+          <div className={styles.buttons}>
+            <Button onClick={handleOpenModal}>Edit</Button>
+            <Button onClick={onLogout}>Logout</Button>
+          </div>
           <br />
           <br />
           <div className={styles.container}>
@@ -82,7 +97,7 @@ function ProfilePage() {
               </TabPanel>
             </Tabs>
           </div>
-        </>
+        </div>
       )}
       {/* Edit modal */}
       <EditProfile
