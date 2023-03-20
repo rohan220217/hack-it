@@ -133,11 +133,12 @@ export const profileReducer = (state = initialState, action) => {
       return { ...state, changeUserDataLoading: true };
 
     case CHANGE_USER_DATA_RECEIVED:
+      console.log(action.payload);
       return {
         ...state,
         loggedUserDetails: {
           ...state.loggedUserDetails,
-          ...action.payload.data.data,
+          ...action.payload.data,
         },
         changeUserDataLoading: false,
       };

@@ -9,10 +9,15 @@ import styles from "./EditProfile.module.scss";
 import Input from "../../../../widgets/Input/Input";
 import { useDispatch } from "react-redux";
 import { changeUserDataRequest } from "../../../../store/Actions/userAction";
+import Select from "react-select";
+import Button from "../../../../components/Button/Button";
+import { uploadFile } from "../../../../services/upload.services";
+import Spinner from "../../../../components/Spinner/Spinner";
 
 function EditProfile({ showEditModal, handleCloseModal, userDetail }) {
   const dispatch = useDispatch();
   const [tempImage, setTempImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState({
     name: "",
     gender: "",
@@ -32,10 +37,6 @@ function EditProfile({ showEditModal, handleCloseModal, userDetail }) {
       gender: userDetail?.gender ?? "",
     }));
   }, [JSON.stringify(userDetail)]);
-
-  const onOptionChangeHandler = (event) => {
-    setValue((prev) => ({ ...prev, gender: event.target.value }));
-  };
 
   const handleUpdate = () => {
     const { isValid, error } = editProfileAllRule(value);
@@ -57,21 +58,48 @@ function EditProfile({ showEditModal, handleCloseModal, userDetail }) {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Base64,
+      resultType: CameraResultType.DataUrl,
     });
-    console.log(image, image.base64String);
-    setTempImage(image.webPath);
-    setValue((prev) => ({ ...prev, photo: image.base64String }));
+    setIsLoading(true);
+    uploadFile({ file: image.dataUrl })
+      .then((data) => {
+        setValue((prev) => ({
+          ...prev,
+          photo: data.filePath,
+        }));
+      })
+      .catch((err) => {
+        // fileInputRef.current[index].value = null;
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
+  const genderChange = (selectedOption) => {
+    setValue((prev) => {
+      return { ...prev, gender: selectedOption.value };
+    });
+  };
+
+  const genderOption = [
+    { label: "Male", value: "M" },
+    { label: "Female", value: "F" },
+    { label: "Non Binary", value: "NF" },
+  ];
 
   console.log(value, tempImage);
   return (
     <ReactModal isOpen={showEditModal} contentLabel="Minimal Modal Example">
-      {value.photo   ? (
+      {value.photo ? (
         <img
-          src={`data:image/png;base64, ${value.photo}`}
+          src={`http://172.99.249.65:3200/${value.photo}`}
           className={styles.image}
         />
+      ) : isLoading ? (
+        <div className={styles.loaderContainer}>
+          <Spinner className={styles.loader} />
+        </div>
       ) : (
         <div className={styles.upload} onClick={takePhoto}>
           Upload
@@ -96,22 +124,38 @@ function EditProfile({ showEditModal, handleCloseModal, userDetail }) {
       </div>
       <div className={styles.name}>
         <label>Gender:</label>
-        <select name="gender" onChange={onOptionChangeHandler}>
-          {" "}
-          <option disabled>Please choose one option</option>
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-          <option value="O">Others</option>
-        </select>
+        <Select
+          defaultValue={value.category}
+          onChange={genderChange}
+          options={genderOption}
+          placeholder="Select your gender"
+          className={styles.collegeField}
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              backgroundColor: "#fafafa",
+              border: "1px solid #dbdbdb",
+              borderRadius: "3px",
 
+              fontSize: "1.3rem",
+              fontWeight: "400",
+            }),
+            menu: (baseStyles, state) => ({
+              ...baseStyles,
+              fontSize: "1.4rem",
+            }),
+          }}
+        />
         <p className={styles.error}>
           {errors && errors["gender"] ? errors["gender"][0] : ""}
         </p>
       </div>
 
       <div className={styles.buttons}>
-        <button onClick={handleUpdate}>Update User</button>
-        <button onClick={handleCloseModal}>Cancel</button>
+        <Button onClick={handleCloseModal} className={styles.backButton}>
+          Cancel
+        </Button>
+        <Button onClick={handleUpdate}>Update User</Button>
       </div>
     </ReactModal>
   );

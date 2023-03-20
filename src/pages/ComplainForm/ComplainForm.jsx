@@ -31,10 +31,6 @@ function ComplainForm() {
     tags: null,
   });
 
-  const onOptionChangeHandler = (event) => {
-    setValue((prev) => ({ ...prev, category: event.target.value }));
-  };
-
   const tagsOption = [
     { value: "Dirty", label: "Dirty" },
     { value: "Unavoidable", label: "Unavoidable" },

@@ -33,7 +33,7 @@ function ProfilePage() {
   useEffect(() => {
     dispatch(getLoggedUser());
   }, []);
-
+  console.log(userState.loggedUserDetails);
   return (
     <>
       <AppBar title="Profile page" />
@@ -57,15 +57,15 @@ function ProfilePage() {
           </h2>
           <div className={styles.buttons}>
             <Button onClick={handleOpenModal}>Edit</Button>
-            <Button onClick={onLogout}>Logout</Button>
+            <Button onClick={onLogout} className={styles.logout}>
+              Logout
+            </Button>
           </div>
-          <br />
           <br />
           <div className={styles.container}>
             <Tabs className={styles.tabs}>
               <TabList className={styles.tabList}>
                 <Tab>My Complain</Tab>
-                <Tab>Area Wise</Tab>
                 <Tab>Saved</Tab>
               </TabList>
 
@@ -89,9 +89,7 @@ function ProfilePage() {
                   />
                 </div>
               </TabPanel>
-              <TabPanel>
-                <h2>Any content 2</h2>
-              </TabPanel>
+
               <TabPanel>
                 <h2>Any content 3</h2>
               </TabPanel>

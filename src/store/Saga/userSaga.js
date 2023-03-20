@@ -44,11 +44,7 @@ function* changeUserData(action) {
   try {
     const data = yield call(changeUserDataApi, action.payload.value);
     action.payload.handleCloseModal();
-    yield put(
-      changeUserDataSuccess({
-        data,
-      })
-    );
+    yield put(changeUserDataSuccess(data));
 
     toast.success("user data updated successfully");
   } catch (error) {
