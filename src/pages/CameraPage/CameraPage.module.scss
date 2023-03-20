@@ -1,17 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { Geolocation } from "@capacitor/geolocation";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { uploadFile } from "../../services/upload.services";
+import Input from "../../widgets/Input/Input";
 
 function CameraPage() {
-  const navigate = useNavigate();
   const [data, setData] = useState({
     photo: null,
     longitude: "",
     latitude: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState({
+    caption: "",
+    tags: "",
+    latitude: "",
+  });
 
   const printCurrentPosition = async () => {
     // await Geolocation.requestPermissions();
@@ -35,45 +38,46 @@ function CameraPage() {
       allowEditing: false,
       resultType: CameraResultType.Base64,
     });
-    setIsLoading(true);
-    uploadFile({ file: image.base64String })
-      .then((data) => {
-        setData((prev) => ({
-          ...prev,
-          photo: data.filePath,
-        }));
-      })
-      .catch((err) => {
-        // fileInputRef.current[index].value = null;
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    setData((prev) => ({
+      ...prev,
+      photo: image.base64String,
+    }));
   };
 
   useEffect(() => {
     printCurrentPosition();
     takePhoto();
   }, []);
-  console.log(data);
+
   return (
     <>
       <h2>Camera page</h2>
-
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : data.photo ? (
-        <div>
-          <img
-            src={`http://172.99.249.65:3200/${data.photo}`}
-            alt="captured by camera"
-            width="100%"
-          />
-          <button onClick={() => navigate("/complain")}>Confirm</button>
-        </div>
+      {data.photo ? (
+        <img
+          src={`data:image/png;base64, ${data.photo}`}
+          alt="test camera"
+          width="100%"
+        />
       ) : (
         <span>There is no picture yet.</span>
       )}
+
+      <div className={styles.name}>
+        <label>Caption:</label>
+        <Input
+          value={value}
+          setValue={setValue}
+          name="caption"
+          placeholder="Enter a caption"
+          theme="PRIMARY"
+          formErrors={errors}
+          setFormErrors={setErrors}
+          singleFieldValidation={editProfileSingleRule}
+        />
+        <p className={styles.error}>
+          {errors && errors["caption"] ? errors["caption"][0] : ""}
+        </p>
+      </div>
     </>
   );
 }

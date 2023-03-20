@@ -105,7 +105,7 @@ function EditProfile({ showEditModal, handleCloseModal, userDetail }) {
         </select>
 
         <p className={styles.error}>
-          {errors && errors["name"] ? errors["name"][0] : ""}
+          {errors && errors["gender"] ? errors["gender"][0] : ""}
         </p>
       </div>
 

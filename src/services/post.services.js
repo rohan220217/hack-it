@@ -1,14 +1,14 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import authHeader from "./auth-header";
 
-const BASE_URL = process.env.REACT_APP_URL;
-
-export const fetchCategoriesApi = async (id) => {
+export const addPostRequestApi = async (data) => {
   try {
-    const res = await axios.get(BASE_URL + `/category?parent=${id}`, {
+    const res = await axios.post("/post", data, {
       headers: { ...authHeader() },
     });
-    return res.data.data;
+    toast.success(res.data.msg);
+    return res.data;
   } catch (e) {
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }

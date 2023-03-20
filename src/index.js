@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app";
+import axios from "axios";
 import "./assets/sass/main.scss";
 import reportWebVitals from "./reportWebVitals";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 
 import store from "./store";
 import { Provider } from "react-redux";
+
+// Axios
+axios.defaults.baseURL = "http://172.99.249.65:3200/api";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

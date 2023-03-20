@@ -2,12 +2,10 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import authHeader from "./auth-header";
 
-const BASE_URL = "http://172.99.249.65:3200/api";
-
 export const loginRequestApi = async ({ mobile }) => {
   try {
     const res = await axios.post(
-      BASE_URL + "/auth",
+       "/auth",
       { mobile },
       {
         headers: { ...authHeader() },
@@ -23,7 +21,7 @@ export const loginRequestApi = async ({ mobile }) => {
 export const otpVerifyRequestApi = async ({ mobile, otp }) => {
   try {
     const res = await axios.post(
-      BASE_URL + "/auth/verify-otp",
+       "/auth/verify-otp",
       { mobile, otp },
       {
         headers: { ...authHeader() },

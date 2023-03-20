@@ -11,6 +11,11 @@ const editProfileRule = {
   gender: "required",
   photo: "required",
 };
+const complainFormRule = {
+  caption: "required|string",
+  category: "required|string",
+  tags: "required",
+};
 
 // Single validation
 export const loginMobNoSingleFieldValidation = ({ key, value }) => {
@@ -56,6 +61,20 @@ export const editProfileSingleRule = ({ key, value }) => {
   }
   return validationResponse;
 };
+export const complainFormSingleValidation = ({ key, value }) => {
+  const validationResponse = { isValid: true };
+  if (complainFormRule[key]) {
+    const validation = new Validator(
+      { [key]: value },
+      { [key]: complainFormRule[key] }
+    );
+    validationResponse.isValid = validation.passes();
+    if (!validationResponse.isValid) {
+      validationResponse.errors = validation.errors.all();
+    }
+  }
+  return validationResponse;
+};
 
 // All validation
 export const loginMobNoAllFieldValidation = (data) => {
@@ -68,6 +87,14 @@ export const loginMobNoAllFieldValidation = (data) => {
 };
 export const editProfileAllRule = (data) => {
   const validation = new Validator(data, editProfileRule);
+  const validationResponse = { isValid: validation.passes() };
+  if (!validationResponse.isValid) {
+    validationResponse.error = validation.errors.all();
+  }
+  return validationResponse;
+};
+export const complainFormAllValidation = (data) => {
+  const validation = new Validator(data, complainFormRule);
   const validationResponse = { isValid: validation.passes() };
   if (!validationResponse.isValid) {
     validationResponse.error = validation.errors.all();

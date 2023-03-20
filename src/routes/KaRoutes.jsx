@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import BottomBar from "../components/BottomBar/BottomBar";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import CameraPage from "../pages/CameraPage/CameraPage";
+import ComplainForm from "../pages/ComplainForm/ComplainForm";
 
 function KaRoutes() {
   const loginState = useSelector((state) => state.profileReducer);
@@ -24,6 +25,7 @@ function KaRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/camera" element={<CameraPage />} />
+          <Route path="/complain" element={<ComplainForm />} />
 
           {/* <Routes path="*" element={<PageNotFound />} /> */}
         </Routes>

@@ -4,7 +4,7 @@ export default function authHeader() {
   const token = localStorage.getItem("hack-it-token");
 
   if (token) {
-    return { "x-auth-token": token, "x-referer-sec-bool": 1 };
+    return { "x-auth-token": token };
   } else {
     return {};
   }
