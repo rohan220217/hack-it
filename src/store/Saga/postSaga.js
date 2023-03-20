@@ -5,8 +5,12 @@ import {
   getSinglePostRequestApi,
   updateSinglePostRequestApi,
   getGroupPostRequestApi,
+  getAllPostsRequestApi,
+  voteSinglePostRequestApi
 } from "../../services/post.services";
 import {
+  getAllComplainFailed,
+  getAllComplainSuccess,
   getGroupComplainFailed,
   getGroupComplainSuccess,
   getSingleComplainFailed,
@@ -16,14 +20,18 @@ import {
   postComplainSuccess,
   updateSingleComplainFailed,
   updateSingleComplainSuccess,
+  voteSingleComplainSuccess,
+  voteSingleComplainFailed,
 } from "../Actions/postAction";
 import {
   ADD_POST_REQUEST,
   ADD_POST_REQUEST_FAILED,
   ADD_POST_REQUEST_SUCCESS,
+  GET_ALL_POSTS_REQUEST,
   GET_GROUP_SINGLE_POST_REQUEST,
   GET_SINGLE_POST_REQUEST,
   UPDATE_SINGLE_POST_REQUEST,
+  VOTE_SINGLE_POST_REQUEST
 } from "../Constants/postTypes";
 
 function* addPostRequest(action) {
@@ -58,6 +66,17 @@ function* getSinglePostRequest(action) {
   }
 }
 
+function* voteSinglePostRequest(action) {
+  try {
+    const data = yield call(voteSinglePostRequestApi, action.payload);
+    console.log("p", action.payload)
+    yield put(voteSingleComplainSuccess(action.payload));
+  } catch (error) {
+    toast.error(error.message);
+    yield put(voteSingleComplainFailed(error));
+  }
+}
+
 function* updateSinglePostRequest(action) {
   try {
     const data = yield call(updateSinglePostRequestApi, action.payload);
@@ -80,9 +99,22 @@ function* getGroupPostRequest(action) {
   }
 }
 
+function* getAllPostsRequest(action) {
+  try {
+    const data = yield call(getAllPostsRequestApi, action.payload);
+    console.log(data);
+    yield put(getAllComplainSuccess(data));
+  } catch (error) {
+    toast.error(error.message);
+    yield put(getAllComplainFailed(error));
+  }
+}
+
 function* loginSaga() {
   yield takeEvery(ADD_POST_REQUEST, addPostRequest);
   yield takeEvery(GET_SINGLE_POST_REQUEST, getSinglePostRequest);
+  yield takeEvery(VOTE_SINGLE_POST_REQUEST, voteSinglePostRequest);
+  yield takeEvery(GET_ALL_POSTS_REQUEST, getAllPostsRequest);
   yield takeEvery(UPDATE_SINGLE_POST_REQUEST, updateSinglePostRequest);
   yield takeEvery(GET_GROUP_SINGLE_POST_REQUEST, getGroupPostRequest);
 }

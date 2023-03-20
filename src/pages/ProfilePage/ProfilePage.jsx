@@ -11,6 +11,33 @@ import { logoutUser } from "../../store/Actions/loginAction";
 import { getLoggedUser } from "../../store/Actions/userAction";
 import EditProfile from "./components/EditProfile/EditProfile";
 import styles from "./ProfilePage.module.scss";
+import { getAllComplain } from "../../store/Actions/postAction";
+
+function ShowComplains({type = null}) {
+  const dispatch = useDispatch();
+  const { complains } = useSelector(state => state.postReducer)
+
+  useEffect(() => {
+    let filter = {}
+    if(type == "saved"){
+      filter['is_saved'] = true
+    }
+    dispatch(getAllComplain(filter))
+  }, [])
+  return (
+    <div className={styles.content}>
+      {
+        complains ? complains.map((k, ki) => {
+          return <img
+            key={ki}
+            src={`http://172.99.249.65:3200/${k[0].contents[0]}`}
+            width={"100%"}
+          />
+        }) : null
+      }
+    </div>
+  )
+}
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -18,6 +45,7 @@ function ProfilePage() {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const userState = useSelector((state) => state.profileReducer);
+
 
   const handleCloseModal = () => {
     setShowEditModal(false);
@@ -33,7 +61,7 @@ function ProfilePage() {
   useEffect(() => {
     dispatch(getLoggedUser());
   }, []);
-  console.log(userState.loggedUserDetails);
+  
   return (
     <>
       <AppBar title="Profile page" />
@@ -70,28 +98,11 @@ function ProfilePage() {
               </TabList>
 
               <TabPanel>
-                <div className={styles.content}>
-                  <img
-                    src="https://www.w3schools.com/w3images/wedding.jpg"
-                    width={"100%"}
-                  />
-                  <img
-                    src="https://www.w3schools.com/w3images/wedding.jpg"
-                    width={"100%"}
-                  />
-                  <img
-                    src="https://www.w3schools.com/w3images/wedding.jpg"
-                    width={"100%"}
-                  />
-                  <img
-                    src="https://www.w3schools.com/w3images/wedding.jpg"
-                    width={"100%"}
-                  />
-                </div>
+                <ShowComplains></ShowComplains>
               </TabPanel>
 
               <TabPanel>
-                <h2>Any content 3</h2>
+                <ShowComplains type="saved"></ShowComplains>
               </TabPanel>
             </Tabs>
           </div>

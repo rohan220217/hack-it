@@ -1,15 +1,23 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppBar from "../../components/AppBar/AppBar";
 import styles from "./HomePage.module.scss";
 import BackgroundImage from "../../assets/background.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Carousel from "react-simply-carousel";
 import Sheet from "react-modal-sheet";
+import { getAllComplain } from "../../store/Actions/postAction";
+import ComplainCard from "../../components/ComplainCard/ComplainCard";
+
 
 function HomePage() {
+  const dispatch = useDispatch()
   const [activeSlide, setActiveSlide] = useState(0);
   const [isOpen, setOpen] = useState(false);
+  const { complains, getAllPostsLoading } = useSelector(state => state.postReducer)
 
+  useEffect(() => {
+    dispatch(getAllComplain())
+  }, [])
   return (
     <div>
       {" "}
@@ -27,6 +35,67 @@ function HomePage() {
         <img src={BackgroundImage} alt="background image" />
         <h2>Welcome back,</h2>
         <h1>Rohan Kumar</h1>
+
+        {!getAllPostsLoading ? complains.map((m, mi) => {
+          return < div key={m._id}>
+            <Carousel
+              containerProps={{
+                style: {
+                  width: "100%",
+                  userSelect: "none",
+                },
+              }}
+              preventScrollOnSwipe
+              swipeTreshold={60}
+              activeSlideIndex={activeSlide}
+              activeSlideProps={{
+                style: {
+                  background: "blue",
+                },
+              }}
+              onRequestChange={setActiveSlide}
+
+              dotsNav={{
+                show: true,
+                itemBtnProps: {
+                  style: {
+                    height: 8,
+                    width: 8,
+                    borderRadius: "50%",
+                    border: 0,
+                  },
+                },
+                activeItemBtnProps: {
+                  style: {
+                    height: 8,
+                    width: 8,
+                    borderRadius: "50%",
+                    border: 0,
+                    background: "black",
+                  },
+                },
+              }}
+              itemsToShow={1}
+              speed={400}
+            >
+              {m.map((complain, index) => (
+                <ComplainCard
+                  key={index}
+                  caption={complain.caption}
+                  createdAt={complain.createdAt}
+                  tags={complain.tags}
+                  postStatus={complain.post_status}
+                  image={complain.contents}
+                  upvotes={complain.post_group.upvotes}
+                  downvotes={complain.post_group.downvotes}
+                  post_group_id={complain.post_group._id}
+                  index={mi}
+                />
+              ))}
+            </Carousel>
+          </div>
+
+        }) : null}
 
         <div className={styles.carousel}>
           <Carousel
@@ -76,9 +145,11 @@ function HomePage() {
               <img src={link} alt="gov 1" width="100%" />
             ))}
           </Carousel>
+
         </div>
+
       </div>
-    </div>
+    </div >
   );
 }
 
