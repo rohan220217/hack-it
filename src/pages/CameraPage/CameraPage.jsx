@@ -2,7 +2,11 @@ import { Camera, CameraResultType } from "@capacitor/camera";
 import { Geolocation } from "@capacitor/geolocation";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AppBar from "../../components/AppBar/AppBar";
 import { uploadFile } from "../../services/upload.services";
+import Spinner from "../../components/Spinner/Spinner";
+import Button from "../../components/Button/Button";
+import styles from "./CameraPage.module.scss";
 
 function CameraPage() {
   const navigate = useNavigate();
@@ -58,21 +62,26 @@ function CameraPage() {
   console.log(data);
   return (
     <>
-      <h2>Camera page</h2>
-
+      <AppBar title="Upload complain image" />
       {isLoading ? (
-        <p>Loading...</p>
-      ) : data.photo ? (
-        <div>
-          <img
-            src={`http://172.99.249.65:3200/${data.photo}`}
-            alt="captured by camera"
-            width="100%"
-          />
-          <button onClick={() => navigate("/complain")}>Confirm</button>
+        <div className={styles.loaderContainer}>
+          <Spinner className={styles.loader} />
         </div>
       ) : (
-        <span>There is no picture yet.</span>
+        <div className={styles.container}>
+          {data.photo ? (
+            <div>
+              <img
+                src={`http://172.99.249.65:3200/${data.photo}`}
+                alt="captured by camera"
+                width="100%"
+              />
+              <Button onClick={() => navigate("/complain")}>Confirm</Button>
+            </div>
+          ) : (
+            <span>There is no picture yet.</span>
+          )}
+        </div>
       )}
     </>
   );

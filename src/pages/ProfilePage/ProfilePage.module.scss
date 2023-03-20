@@ -1,3 +1,20 @@
+@import "../../assets/sass/main.scss";
+
+.loaderContainer {
+  height: 80vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  .loader {
+    > div {
+      height: 3rem !important;
+      width: 3rem !important;
+      border-color: $github-3 transparent transparent transparent !important;
+    }
+  }
+}
+
 .container {
   width: 100vw;
   display: flex;
@@ -17,8 +34,8 @@
   }
   .content {
     display: grid;
-  grid-template-columns: 1fr 1fr;	
-  gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     // display: flex;
     // img{
     //     display: flex;

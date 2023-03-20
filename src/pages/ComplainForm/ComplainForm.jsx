@@ -3,6 +3,8 @@ import styles from "./ComplainForm.module.scss";
 import Input from "../../widgets/Input/Input";
 import { complainFormSingleValidation } from "../../utils/validation";
 import Select from "react-select";
+import AppBar from "../../components/AppBar/AppBar";
+import Button from "../../components/Button/Button";
 
 function ComplainForm() {
   const [value, setValue] = useState({
@@ -21,26 +23,38 @@ function ComplainForm() {
     setValue((prev) => ({ ...prev, category: event.target.value }));
   };
 
-  const levelOptions = [
+  const tagsOption = [
     { value: "Dirty", label: "Dirty" },
     { value: "Unavoidable", label: "Unavoidable" },
     { value: "Muddy", label: "Muddy" },
     { value: "Unknown", label: "Unknown" },
   ];
 
-  const levelChange = (selectedOption) => {
+  const categoryOption = [
+    { value: "Garbage", label: "Garbage" },
+    { value: "Pothole", label: "Pothole" },
+    { value: "Sewage", label: "Sewage" },
+    { value: "Water", label: "Water" },
+  ];
+
+  const tagChange = (selectedOption) => {
     setValue((prev) => {
       return { ...prev, tags: selectedOption.map((x) => x.value) };
+    });
+  };
+  const categoryChange = (selectedOption) => {
+    setValue((prev) => {
+      return { ...prev, category: selectedOption };
     });
   };
 
   console.log(value);
   return (
     <>
-      <h2>Complain form</h2>
+      <AppBar title="Complain form" />
       <div className={styles.form}>
         <div className={styles.mobile}>
-          <label>Caption:</label>
+          <p>Caption: </p>
           <Input
             value={value}
             setValue={setValue}
@@ -59,36 +73,50 @@ function ComplainForm() {
         </div>
 
         <div className={styles.name}>
-          <label>Category:</label>
-          <select name="category" onChange={onOptionChangeHandler}>
-            {" "}
-            <option disabled selected>
-              Please choose one option
-            </option>
-            <option value="garbage">Garbage</option>
-            <option value="pothole">PotHole</option>
-            <option value="sewage">Sewage</option>
-            <option value="water">Water Accomodation</option>
-          </select>
+          <p>Category: </p>
+          <Select
+            // defaultValue={value.defaultLevel}
+            onChange={categoryChange}
+            options={categoryOption}
+            placeholder="Select your category"
+            className={styles.collegeField}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                backgroundColor: "#fafafa",
+                border: "1px solid #dbdbdb",
+                borderRadius: "3px",
+
+                fontSize: "1.3rem",
+                fontWeight: "400",
+              }),
+              menu: (baseStyles, state) => ({
+                ...baseStyles,
+                fontSize: "1.4rem",
+              }),
+            }}
+          />
 
           <p className={styles.error}>
             {errors && errors["category"] ? errors["category"][0] : ""}
           </p>
         </div>
         <div className={styles.name}>
-          <label>Tags:</label>
+          <p>Tags: </p>
           <Select
             // defaultValue={value.defaultLevel}
             isMulti
-            onChange={levelChange}
-            options={levelOptions}
-            placeholder="Select your level"
+            onChange={tagChange}
+            options={tagsOption}
+            placeholder="Select your tags"
             className={styles.collegeField}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                border: "1px solid #e5fdbe",
-                borderRadius: "15px",
+                backgroundColor: "#fafafa",
+                border: "1px solid #dbdbdb",
+                borderRadius: "3px",
+
                 fontSize: "1.3rem",
                 fontWeight: "400",
               }),
@@ -103,9 +131,8 @@ function ComplainForm() {
             {errors && errors["tags"] ? errors["tags"][0] : ""}
           </p>
         </div>
+        <Button className={styles.submit}>Post</Button>
       </div>
-
-      <button className={styles.submit}>Post</button>
     </>
   );
 }

@@ -1,85 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import { Camera, CameraResultType } from "@capacitor/camera";
-import { Geolocation } from "@capacitor/geolocation";
-import { useEffect, useState } from "react";
-import Input from "../../widgets/Input/Input";
+@import "../../assets/sass/main.scss";
 
-function CameraPage() {
-  const [data, setData] = useState({
-    photo: null,
-    longitude: "",
-    latitude: "",
-  });
-  const [value, setValue] = useState({
-    caption: "",
-    tags: "",
-    latitude: "",
-  });
+.loaderContainer {
+  height: 80vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 
-  const printCurrentPosition = async () => {
-    // await Geolocation.requestPermissions();
-    const coordinates = await Geolocation.getCurrentPosition();
-
-    setData((prev) => ({
-      ...prev,
-      latitude: coordinates.coords.latitude,
-      longitude: coordinates.coords.longitude,
-    }));
-    console.log(
-      "Cordinates:",
-      coordinates.coords.latitude,
-      coordinates.coords.longitude
-    );
-  };
-
-  const takePhoto = async () => {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-    });
-    setData((prev) => ({
-      ...prev,
-      photo: image.base64String,
-    }));
-  };
-
-  useEffect(() => {
-    printCurrentPosition();
-    takePhoto();
-  }, []);
-
-  return (
-    <>
-      <h2>Camera page</h2>
-      {data.photo ? (
-        <img
-          src={`data:image/png;base64, ${data.photo}`}
-          alt="test camera"
-          width="100%"
-        />
-      ) : (
-        <span>There is no picture yet.</span>
-      )}
-
-      <div className={styles.name}>
-        <label>Caption:</label>
-        <Input
-          value={value}
-          setValue={setValue}
-          name="caption"
-          placeholder="Enter a caption"
-          theme="PRIMARY"
-          formErrors={errors}
-          setFormErrors={setErrors}
-          singleFieldValidation={editProfileSingleRule}
-        />
-        <p className={styles.error}>
-          {errors && errors["caption"] ? errors["caption"][0] : ""}
-        </p>
-      </div>
-    </>
-  );
+  .loader {
+    > div {
+      height: 3rem !important;
+      width: 3rem !important;
+      border-color: $github-3 transparent transparent transparent !important;
+    }
+  }
 }
 
-export default CameraPage;
+.container {
+  padding: 1rem;
+}

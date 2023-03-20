@@ -1,6 +1,9 @@
 .body {
   position: relative;
   .routeContainer {
-    min-height: calc(100vh - 8rem);
+    min-height: calc(100vh - 5rem);
+  }
+  .routeContainerFull{
+    min-height: 100vh;
   }
 }

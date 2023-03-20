@@ -17,10 +17,14 @@ function KaRoutes() {
 
   return checkAuthentication() ? (
     <div className={styles.body}>
-      <div className={styles.appBar}>
+      {/* <div className={styles.appBar}>
         <AppBar />
-      </div>
-      <div className={styles.routeContainer}>
+      </div> */}
+      <div
+        className={
+          loginState.token ? styles.routeContainer : styles.routeContainerFull
+        }
+      >
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />

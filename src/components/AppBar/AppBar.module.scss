@@ -1,3 +1,5 @@
+@import "../../assets/sass/main.scss";
+
 .appbar {
   height: 4rem;
   background-color: white;
@@ -7,4 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  h1 {
+    font-size: 1.5rem;
+    color: $github-3;
+    font-weight: 500;
+  }
 }

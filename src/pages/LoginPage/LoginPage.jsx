@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 import {
   loginUserRequested,
   verifyOtpUserRequested,
@@ -11,6 +12,7 @@ import {
 } from "../../utils/validation";
 import Input from "../../widgets/Input/Input";
 import styles from "./LoginPage.module.scss";
+import AppIcon from "../../assets/Sarathi.png"
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -43,14 +45,14 @@ function LoginPage() {
         otp: value2.otp,
         next: navigate,
       })
-    )
+    );
   };
   return (
-    <main style={{ textAlign: "center" }}>
-      <h2>Login</h2>
+    <main className={styles.body}>
       <div className={styles.form}>
+        <img src={AppIcon} alt="App icon" className={styles.appicon}/>
+        <h1>Login</h1>
         <div className={styles.mobile}>
-          <label>Mobile:</label>
           <Input
             value={value}
             setValue={setValue}
@@ -70,13 +72,12 @@ function LoginPage() {
 
         {loginState.isMobVerified && (
           <div className={styles.mobile}>
-            <label>OTP:</label>
             <Input
               value={value2}
               setValue={setValue2}
               name="otp"
               // className={styles.sdfsdf}
-              placeholder="Enter mobile number"
+              placeholder="Enter the otp"
               theme="PRIMARY"
               formErrors={errors2}
               setFormErrors={setErrors2}
@@ -87,16 +88,14 @@ function LoginPage() {
             </p>
           </div>
         )}
-        {loginState.isLoginLoading || loginState.isVerifyUserLoading ? (
-          <div>Loading...</div>
-        ) : loginState.isMobVerified ? (
-          <button type="submit" onClick={handleOtp}>
+        {loginState.isMobVerified ? (
+          <Button loading={loginState.isVerifyUserLoading} onClick={handleOtp}>
             Verify Otp
-          </button>
+          </Button>
         ) : (
-          <button type="submit" onClick={handleLogin}>
+          <Button loading={loginState.isLoginLoading} onClick={handleLogin}>
             Login
-          </button>
+          </Button>
         )}
       </div>
     </main>
