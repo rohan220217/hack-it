@@ -8,7 +8,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { getGroupSinglePost } from "../../store/Actions/postAction";
 import Spinner from "../../components/Spinner/Spinner";
 import styles from "./PostDetailPage.module.scss";
-import ComplainCard from "./components/ComplainCard/ComplainCard";
+import ComplainCard from "../../components/ComplainCard/ComplainCard";
 import Carousel from "react-simply-carousel";
 
 function PostDetailPage() {

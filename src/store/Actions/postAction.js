@@ -11,6 +11,12 @@ import {
   GET_GROUP_SINGLE_POST_REQUEST,
   GET_GROUP_SINGLE_POST_REQUEST_SUCCESS,
   GET_GROUP_SINGLE_POST_REQUEST_FAILED,
+  GET_ALL_POSTS_REQUEST,
+  GET_ALL_POSTS_REQUEST_SUCCESS,
+  GET_ALL_POSTS_REQUEST_FAILED,
+  VOTE_SINGLE_POST_REQUEST,
+  VOTE_SINGLE_POST_REQUEST_SUCCESS,
+  VOTE_SINGLE_POST_REQUEST_FAILED,
 } from "../Constants/postTypes";
 
 export const postComplain = (data) => {
@@ -51,4 +57,24 @@ export const getGroupComplainSuccess = (data) => {
 };
 export const getGroupComplainFailed = (data) => {
   return { type: GET_GROUP_SINGLE_POST_REQUEST_FAILED, payload: data };
+};
+
+export const getAllComplain = (data) => {
+  return { type: GET_ALL_POSTS_REQUEST, payload: data };
+};
+export const getAllComplainSuccess = (data) => {
+  return { type: GET_ALL_POSTS_REQUEST_SUCCESS, payload: data };
+};
+export const getAllComplainFailed = (data) => {
+  return { type: GET_ALL_POSTS_REQUEST_FAILED, payload: data };
+};
+
+export const voteSingleComplain = (data) => {
+  return { type: VOTE_SINGLE_POST_REQUEST, payload: data };
+};
+export const voteSingleComplainSuccess = (data) => {
+  return { type: VOTE_SINGLE_POST_REQUEST_SUCCESS, payload: data };
+};
+export const voteSingleComplainFailed = (data) => {
+  return { type: VOTE_SINGLE_POST_REQUEST_FAILED, payload: data };
 };

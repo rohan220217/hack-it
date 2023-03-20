@@ -23,10 +23,37 @@ export const getSinglePostRequestApi = async ({ id }) => {
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }
 };
+
+export const getAllPostsRequestApi = async() => {
+  try {
+    const res = await axios.get("/post", {
+      headers: { ...authHeader() },
+    });
+    return res.data;
+  } catch (e) {
+    throw Error(e.response?.data?.msg ?? "Something went wrong");
+  }
+}
 export const updateSinglePostRequestApi = async ({ value, id }) => {
   try {
     const res = await axios.put(
       `/post/${id}`,
+      { ...value },
+      {
+        headers: { ...authHeader() },
+      }
+    );
+    toast.success(res.data.msg);
+    return res.data;
+  } catch (e) {
+    throw Error(e.response?.data?.msg ?? "Something went wrong");
+  }
+};
+
+export const voteSinglePostRequestApi = async ({ value, id }) => {
+  try {
+    const res = await axios.put(
+      `/post/${id}/vote`,
       { ...value },
       {
         headers: { ...authHeader() },

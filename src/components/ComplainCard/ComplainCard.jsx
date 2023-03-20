@@ -1,19 +1,27 @@
 import styles from "./ComplainCard.module.scss";
-import { ReactComponent as MoreIcon } from "../../../../assets/svg/more.svg";
-import { ReactComponent as ArrowUpIcon } from "../../../../assets/svg/arrowUp.svg";
-import { ReactComponent as ArrowDownIcon } from "../../../../assets/svg/arrowDown.svg";
-import { ReactComponent as CommentIcon } from "../../../../assets/svg/Comment.svg";
+import { ReactComponent as MoreIcon } from "../../assets/svg/more.svg";
+import { ReactComponent as ArrowUpIcon } from "../../assets/svg/arrowUp.svg";
+import { ReactComponent as ArrowDownIcon } from "../../assets/svg/arrowDown.svg";
+import { ReactComponent as CommentIcon } from "../../assets/svg/Comment.svg";
 import dayjs from "dayjs";
+import { voteSingleComplain } from "../../store/Actions/postAction";
+import { useDispatch } from "react-redux";
+
 var relativeTime = require("dayjs/plugin/relativeTime");
 
 function ComplainCard({
+  post_group_id,
   caption,
   createdAt,
   tags,
   postStatus,
   image,
   isComment = false,
+  upvotes,
+  downvotes,
+  index
 }) {
+  const dispatch = useDispatch()
   const updatedDate = () => {
     console.log(createdAt);
     dayjs.extend(relativeTime);
@@ -51,12 +59,12 @@ function ComplainCard({
       </div>
       <div className={styles.cardfooter}>
         <div className={styles.cardfooterGroup}>
-          <ArrowUpIcon />
-          <h3>20k</h3>
+          <ArrowUpIcon onClick={() => dispatch(voteSingleComplain({id : post_group_id, value : {type: "U", rowIndex : index}}))} />
+          <h3>{upvotes}</h3>
         </div>
         <div className={styles.cardfooterGroup}>
-          <ArrowDownIcon />
-          <h3>20k</h3>
+          <ArrowDownIcon onClick={() => dispatch(voteSingleComplain({id : post_group_id, value : {type: "D", rowIndex : index}}))} />
+          <h3>{downvotes}</h3>
         </div>
         <div className={styles.cardfooterGroup}>
           <CommentIcon />
