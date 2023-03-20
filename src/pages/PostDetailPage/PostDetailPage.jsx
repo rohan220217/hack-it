@@ -78,6 +78,7 @@ function PostDetailPage() {
           >
             {postState.groupComplain.map((complain, index) => (
               <ComplainCard
+              post_group_id={complain?.[0].post_group._id}
                 key={index}
                 caption={complain?.[0].caption}
                 createdAt={complain?.[0].createdAt}

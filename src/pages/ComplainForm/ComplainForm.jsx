@@ -23,6 +23,7 @@ function ComplainForm() {
     caption: "",
     category: "",
     tags: [],
+    ip_address : "192.168.1.1"
   });
 
   const [errors, setErrors] = useState({
@@ -52,9 +53,15 @@ function ComplainForm() {
   };
   const categoryChange = (selectedOption) => {
     setValue((prev) => {
-      return { ...prev, category: selectedOption };
+      return { ...prev, category: selectedOption  };
     });
   };
+
+  const confirmPost = () => {
+    let newValue = {...value, category : (value?.category || null )}
+    console.log(newValue)
+    dispatch(updateSingleComplain({ value : newValue, id, navigate }))
+  }
 
   useEffect(() => {
     dispatch(getSingleComplain({ id, setValue }));
@@ -95,7 +102,7 @@ function ComplainForm() {
         <div className={styles.name}>
           <p>Category: </p>
           <Select
-            defaultValue={value.category}
+            value={value.category}
             onChange={categoryChange}
             options={categoryOption}
             placeholder="Select your category"
@@ -154,9 +161,7 @@ function ComplainForm() {
         <Button
           className={styles.submit}
           loading={postState.updateSinglePostLoading}
-          onClick={() =>
-            dispatch(updateSingleComplain({ value, id, navigate }))
-          }
+          onClick={confirmPost}
         >
           Post
         </Button>

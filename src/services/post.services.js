@@ -24,9 +24,19 @@ export const getSinglePostRequestApi = async ({ id }) => {
   }
 };
 
-export const getAllPostsRequestApi = async() => {
+export const getAllPostsRequestApi = async(data) => {
   try {
-    const res = await axios.get("/post", {
+    let query_arr = []
+    for(let key in data){
+      let value = data[key]
+      if(value !== undefined && value !== null){
+        query_arr.push(`${key}=${encodeURIComponent(value)}`)
+      }
+    }
+
+    const queryString = query_arr.join("&")
+    console.log(queryString)
+    const res = await axios.get(`/post?${queryString}`, {
       headers: { ...authHeader() },
     });
     return res.data;
