@@ -1,0 +1,27 @@
+.buttons {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.upload {
+  background-color: olivedrab;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+.image {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  margin: 2rem auto;
+  display: flex;
+  text-align: center;
+}

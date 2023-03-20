@@ -1,4 +1,3 @@
-import { wait } from "@testing-library/user-event/dist/utils";
 import toast from "react-hot-toast";
 import { call, takeEvery, put } from "redux-saga/effects";
 import {
@@ -19,7 +18,6 @@ import {
 function* loginRequest(action) {
   try {
     const data = yield call(loginRequestApi, action.payload);
-    yield wait(500);
     yield put(loginUserSuccess(data));
   } catch (error) {
     toast.error(error.message);
@@ -30,11 +28,8 @@ function* loginRequest(action) {
 function* otpVerifyRequest(action) {
   try {
     const data = yield call(otpVerifyRequestApi, action.payload);
-    yield wait(500);
-    console.log(action.payload);
-    yield action.payload.next('/');
-
     yield put(verifyOtpUserSuccess(data));
+    action.payload.next('/');
   } catch (error) {
     toast.error(error.message);
     yield put(verifyOtpUserFailure(error));

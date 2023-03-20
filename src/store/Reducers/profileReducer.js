@@ -70,10 +70,10 @@ export const profileReducer = (state = initialState, action) => {
     }
 
     case VERIFY_OTP_USER_SUCCESS: {
-      localStorage.setItem("hack-it-token", action.payload.data.token);
-      localStorage.setItem("hack-it-user-type", action.payload.data.type);
-      localStorage.setItem("hack-it-name", action.payload.data.name);
-      localStorage.setItem("hack-it-mobile", action.payload.data.mobile);
+      localStorage.setItem("hack-it-token", action.payload.token);
+      localStorage.setItem("hack-it-user-type", action.payload.type);
+      localStorage.setItem("hack-it-name", action.payload.name);
+      localStorage.setItem("hack-it-mobile", action.payload.mobile);
 
       return {
         ...state,
@@ -97,8 +97,8 @@ export const profileReducer = (state = initialState, action) => {
       localStorage.clear();
       return {
         ...state,
-        token: "",
         userType: UserConstants.USER_TYPE_USER,
+        token: "",
         name: "",
         mobile: "",
       };
@@ -133,10 +133,12 @@ export const profileReducer = (state = initialState, action) => {
       return { ...state, changeUserDataLoading: true };
 
     case CHANGE_USER_DATA_RECEIVED:
-      action.payload.setChangeUser(false);
       return {
         ...state,
-        loggedUserDetails: action.payload.data,
+        loggedUserDetails: {
+          ...state.loggedUserDetails,
+          ...action.payload.data.data,
+        },
         changeUserDataLoading: false,
       };
 

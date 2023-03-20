@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const BASE_URL = process.env.REACT_APP_URL;
+const BASE_URL = "http://172.99.249.65:3200/api";
 
 export const getLoggedUserApi = async () => {
   try {
@@ -27,7 +27,7 @@ export const changePasswordApi = async (data) => {
 
 export const changeUserDataApi = async (data) => {
   try {
-    const res = await axios.put(BASE_URL + "/user", data, {
+    const res = await axios.put(BASE_URL + "/user/profile", data, {
       headers: { ...authHeader() },
     });
     

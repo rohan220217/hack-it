@@ -40,10 +40,10 @@ function LoginPage() {
     dispatch(
       verifyOtpUserRequested({
         mobile: value.mobno,
-        otp: value.otp,
+        otp: value2.otp,
         next: navigate,
       })
-    );
+    )
   };
   return (
     <main style={{ textAlign: "center" }}>

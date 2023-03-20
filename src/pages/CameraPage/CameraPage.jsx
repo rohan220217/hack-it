@@ -12,10 +12,11 @@ function CameraPage() {
   };
 
   const printCurrentPosition = async () => {
-    await Geolocation.requestPermissions();
+    // await Geolocation.requestPermissions();
     const coordinates = await Geolocation.getCurrentPosition();
 
     console.log("Current position:", coordinates);
+    console.log("Cordinates:", coordinates.coords);
   };
 
   const takePhoto = async () => {
@@ -23,7 +24,7 @@ function CameraPage() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.Base64,
     });
     console.log(image, image.base64String);
     setPhoto(image.webPath);

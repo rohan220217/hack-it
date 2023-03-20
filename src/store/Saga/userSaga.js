@@ -43,10 +43,10 @@ function* changePassword(action) {
 function* changeUserData(action) {
   try {
     const data = yield call(changeUserDataApi, action.payload.value);
+    action.payload.handleCloseModal();
     yield put(
       changeUserDataSuccess({
         data,
-        setChangeUser: action.payload.setChangeUser,
       })
     );
 

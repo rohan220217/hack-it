@@ -1,19 +1,20 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import authHeader from "./auth-header";
 
-const BASE_URL = process.env.REACT_APP_URL;
+const BASE_URL = "http://172.99.249.65:3200/api";
 
 export const loginRequestApi = async ({ mobile }) => {
   try {
-    // const res = await axios.post(BASE_URL + "/auth", mobile, {
-    //   headers: { ...authHeader() },
-    // });
-
-    // return res.data.data;
-    return {
-      success: true,
-      msg: "OTP Sent to your mobile number",
-    };
+    const res = await axios.post(
+      BASE_URL + "/auth",
+      { mobile },
+      {
+        headers: { ...authHeader() },
+      }
+    );
+    toast.success(res.data.msg);
+    return res.data;
   } catch (e) {
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }
@@ -21,21 +22,15 @@ export const loginRequestApi = async ({ mobile }) => {
 
 export const otpVerifyRequestApi = async ({ mobile, otp }) => {
   try {
-    // const res = await axios.post(BASE_URL + "/auth", mobile, {
-    //   headers: { ...authHeader() },
-    // });
+    const res = await axios.post(
+      BASE_URL + "/auth/verify-otp",
+      { mobile, otp },
+      {
+        headers: { ...authHeader() },
+      }
+    );
 
-    // return res.data.data;
-    return {
-      success: true,
-      data: {
-        name: "Kushal Poddar",
-        type: "U",
-        mobile: "9007287210",
-        token:
-          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQxNzRlNzBjY2VjMjQwNGM3MmEwNzllIiwidHlwZSI6IlUiLCJuYW1lIjoiS3VzaGFsIFBvZGRhciIsIm1vYmlsZSI6IjkwMDcyODcyMTAiLCJpYXQiOjE2NzkyNTIxNDksImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC8iLCJpc3MiOiJJRFlMTCIsInN1YiI6IjkwMDcyODcyMTAifQ.bqLT7Y_BymMeJfPVWsE_8kKn0IgXP_DQBQaReGmw3bF1ifsljV4VP-38zV2ZW0sBpRVQsUDc9W3UAAuTon75suCJw53etqt1bMXFZiS16aauuX2Nb9-8twg5GitOUSsWhWz-GsXsdKUE1ed7hdIlJ-WOtFw5HQZkNebBVf-rIRQ",
-      },
-    };
+    return res.data.data;
   } catch (e) {
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }
