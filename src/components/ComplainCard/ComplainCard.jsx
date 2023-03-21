@@ -19,14 +19,16 @@ function ComplainCard({
   isComment = false,
   upvotes,
   downvotes,
-  index
+  index,
+  userName,
+  onMoreClick = () => {},
+  lat = "",
+  long = "",
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const updatedDate = () => {
-    console.log(createdAt);
     dayjs.extend(relativeTime);
-    let formatedDay = dayjs(createdAt).format("YYYY-MM-DD");
-    return dayjs(formatedDay).fromNow(true) + " ago";
+    return dayjs(createdAt).fromNow(true) + " ago";
   };
 
   return (
@@ -38,11 +40,22 @@ function ComplainCard({
             alt="avatar"
           />
           <div className={styles.namePlace}>
-            <h1>Rohan Kumar</h1>
-            <h2>Tapti Hostel</h2>
+            <h1>{userName}</h1>
+            <h2
+              onClick={() =>
+                window.open(
+                  `http://maps.google.com/?q=${lat},${long}`,
+                  "_blank" // <- This is what makes it open in a new window.
+                )
+              }
+            >
+              View on map{" "}
+            </h2>
           </div>
         </div>
-        <MoreIcon />
+        <div onClick={onMoreClick}>
+          <MoreIcon />
+        </div>
       </div>
       <img
         src={`http://172.99.249.65:3200/${image}`}
@@ -59,16 +72,34 @@ function ComplainCard({
       </div>
       <div className={styles.cardfooter}>
         <div className={styles.cardfooterGroup}>
-          <ArrowUpIcon onClick={() => dispatch(voteSingleComplain({id : post_group_id, value : {type: "U", rowIndex : index}}))} />
+          <ArrowUpIcon
+            onClick={() =>
+              dispatch(
+                voteSingleComplain({
+                  id: post_group_id,
+                  value: { type: "U", rowIndex: index },
+                })
+              )
+            }
+          />
           <h3>{upvotes}</h3>
         </div>
         <div className={styles.cardfooterGroup}>
-          <ArrowDownIcon onClick={() => dispatch(voteSingleComplain({id : post_group_id, value : {type: "D", rowIndex : index}}))} />
+          <ArrowDownIcon
+            onClick={() =>
+              dispatch(
+                voteSingleComplain({
+                  id: post_group_id,
+                  value: { type: "D", rowIndex: index },
+                })
+              )
+            }
+          />
           <h3>{downvotes}</h3>
         </div>
         <div className={styles.cardfooterGroup}>
           <CommentIcon />
-          <h3>5 Comments</h3>
+          <h3>0 Comments</h3>
         </div>
 
         <div className={styles.cardFooterStatus + " " + styles[postStatus]}>

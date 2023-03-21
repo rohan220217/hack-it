@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import AppBar from "../../components/AppBar/AppBar";
@@ -13,30 +13,36 @@ import EditProfile from "./components/EditProfile/EditProfile";
 import styles from "./ProfilePage.module.scss";
 import { getAllComplain } from "../../store/Actions/postAction";
 
-function ShowComplains({type = null}) {
+function ShowComplains({ type = null }) {
   const dispatch = useDispatch();
-  const { complains } = useSelector(state => state.postReducer)
+  const { complains } = useSelector((state) => state.postReducer);
 
   useEffect(() => {
-    let filter = {}
-    if(type == "saved"){
-      filter['is_saved'] = true
+    let filter = {};
+    if (type == "saved") {
+      filter["is_saved"] = true;
     }
-    dispatch(getAllComplain(filter))
-  }, [])
+    dispatch(getAllComplain(filter));
+  }, []);
   return (
     <div className={styles.content}>
-      {
-        complains ? complains.map((k, ki) => {
-          return <img
-            key={ki}
-            src={`http://172.99.249.65:3200/${k[0].contents[0]}`}
-            width={"100%"}
-          />
-        }) : null
-      }
+      {complains
+        ? complains.map((k, ki) => {
+            return (
+              <div>
+                <Link to={`/post/${k[0].post_group._id}`}>
+                  <img
+                    key={ki}
+                    src={`http://172.99.249.65:3200/${k[0].contents[0]}`}
+                    width={"100%"}
+                  />
+                </Link>
+              </div>
+            );
+          })
+        : null}
     </div>
-  )
+  );
 }
 
 function ProfilePage() {
@@ -45,7 +51,6 @@ function ProfilePage() {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const userState = useSelector((state) => state.profileReducer);
-
 
   const handleCloseModal = () => {
     setShowEditModal(false);
@@ -61,7 +66,7 @@ function ProfilePage() {
   useEffect(() => {
     dispatch(getLoggedUser());
   }, []);
-  
+
   return (
     <>
       <AppBar title="Profile page" />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./ComplainForm.module.scss";
+import styles from "./UpdateComplain.module.scss";
 import Input from "../../widgets/Input/Input";
 import { complainFormSingleValidation } from "../../utils/validation";
 import Select from "react-select";
@@ -12,7 +12,7 @@ import {
 } from "../../store/Actions/postAction";
 import { json, useNavigate, useParams } from "react-router-dom";
 
-function ComplainForm() {
+function UpdateComplain() {
   const postState = useSelector((state) => state.postReducer);
   const dispatch = useDispatch();
   const { groupId, id } = useParams();
@@ -23,7 +23,7 @@ function ComplainForm() {
     caption: "",
     category: "",
     tags: [],
-    ip_address : "192.168.1.1"
+    ip_address: "192.168.1.1",
   });
 
   const [errors, setErrors] = useState({
@@ -53,25 +53,25 @@ function ComplainForm() {
   };
   const categoryChange = (selectedOption) => {
     setValue((prev) => {
-      return { ...prev, category: selectedOption  };
+      return { ...prev, category: selectedOption };
     });
   };
 
   const confirmPost = () => {
-    let newValue = {...value, category : (value?.category || null )}
-    console.log(newValue)
-    dispatch(updateSingleComplain({ value : newValue, id, navigate }))
-  }
+    let newValue = { ...value, category: value?.category || null };
+    console.log(newValue);
+    dispatch(updateSingleComplain({ value: newValue, id, navigate }));
+  };
 
   useEffect(() => {
     dispatch(getSingleComplain({ id, setValue }));
   }, []);
 
-  console.log("value", value);
+  console.log(value);
 
   return (
     <>
-      <AppBar title="Complain form" />
+      <AppBar title="Update complain" />
       <div className={styles.form}>
         {postState.currentSinglePostDetail?.contents?.length && (
           <img
@@ -170,4 +170,4 @@ function ComplainForm() {
   );
 }
 
-export default ComplainForm;
+export default UpdateComplain;

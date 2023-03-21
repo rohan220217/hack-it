@@ -10,6 +10,7 @@ import ComplainForm from "../pages/ComplainForm/ComplainForm";
 import PostDetailPage from "../pages/PostDetailPage/PostDetailPage";
 import AnalyticsPage from "../pages/AnalyticsPage/AnalyticsPage";
 import NotificationPage from "../pages/NotificationPage/NotificationPage";
+import UpdateComplain from "../pages/UpdateComplain/UpdateComplain";
 
 function KaRoutes() {
   const loginState = useSelector((state) => state.profileReducer);
@@ -36,6 +37,7 @@ function KaRoutes() {
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/notification" element={<NotificationPage />} />
+          <Route path="/update-complain/:id" element={<UpdateComplain />} />
 
           {/* <Routes path="*" element={<PageNotFound />} /> */}
         </Routes>

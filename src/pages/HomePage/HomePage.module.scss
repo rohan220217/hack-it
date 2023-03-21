@@ -6,14 +6,13 @@
     display: flex;
     width: 100%;
   }
-  h2 {
+  & >h2 {
     position: absolute;
     top: 2.5rem;
     left: 2rem;
     font-size: 2rem;
-
   }
-  h1 {
+  &> h1 {
     position: absolute;
     top: 4.5rem;
     left: 2rem;
@@ -21,11 +20,13 @@
     color: #000;
   }
 
-  .carousel{
+  .carousel {
     top: 12rem;
     left: 0;
     position: absolute;
     width: 100%;
-    
+  }
+  .content {
+    margin-top: 12rem;
   }
 }

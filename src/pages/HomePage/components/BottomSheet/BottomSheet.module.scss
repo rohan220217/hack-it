@@ -1,0 +1,32 @@
+.icons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+
+  .iconWithText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 4rem;
+      width: 4rem;
+      border: 1px solid #8e8e8e;
+      border-radius: 50%;
+    }
+    h3 {
+    }
+  }
+  .danger {
+    & > div {
+      border: 1px solid #fa5652;
+    }
+    h3 {
+      color: #fa5652;
+    }
+  }
+}
+
