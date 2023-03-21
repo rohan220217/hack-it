@@ -59,7 +59,7 @@ function ComplainForm() {
   };
 
   const confirmPost = () => {
-    let newValue = { ...value, category: value?.category || null };
+    let newValue = { ...value, category: value?.category?.value || null };
     console.log(newValue);
     dispatch(updateSingleComplain({ value: newValue, id, navigate }));
   };
@@ -155,9 +155,11 @@ function ComplainForm() {
             }}
           /> */}
           <p>
-            {postState.currentSinglePostDetail.tags
-              .map((t) => `#${t}`)
-              .join(" ")}
+            {postState?.currentSinglePostDetail?.tags
+              ? postState?.currentSinglePostDetail?.tags
+                  .map((t) => `#${t}`)
+                  .join(" ")
+              : null}
           </p>
 
           <p className={styles.error}>

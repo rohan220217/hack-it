@@ -60,7 +60,7 @@ function* getSinglePostRequest(action) {
       ...prev,
       caption: data.data.caption,
       category: { value: data.data.category, label: data.data.category },
-      // tags: data.data.tags,
+      tags: data.data.tags,
     }));
     yield put(getSingleComplainSuccess(data));
   } catch (error) {

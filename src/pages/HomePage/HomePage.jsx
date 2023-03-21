@@ -35,7 +35,30 @@ function HomePage() {
             ? complains.map((m, mi) => {
                 return (
                   <div key={m._id}>
-                    <Carousel
+                    {m.map((complain, index) => (
+                      <>
+                        <ComplainCard
+                          key={index}
+                          caption={complain.caption}
+                          createdAt={complain.createdAt}
+                          tags={complain.tags}
+                          postStatus={complain.post_group.current_status}
+                          image={complain.contents}
+                          upvotes={complain.post_group.upvotes}
+                          downvotes={complain.post_group.downvotes}
+                          post_group_id={complain.post_group._id}
+                          index={mi}
+                          userName={complain.user.name}
+                          onMoreClick={() => {
+                            setOpen(true);
+                            setCurrentGroupPostId(complain.post_group._id);
+                          }}
+                          lat={complain.post_group.latitude}
+                          long={complain.post_group.longitude}
+                        />
+                      </>
+                    ))}
+                    {/* <Carousel
                       containerProps={{
                         style: {
                           width: "100%",
@@ -76,7 +99,6 @@ function HomePage() {
                     >
                       {m.map((complain, index) => (
                         <>
-                          {/* {JSON.stringify(complain.post_group.current_status)} */}
                           <ComplainCard
                             key={index}
                             caption={complain.caption}
@@ -98,7 +120,7 @@ function HomePage() {
                           />
                         </>
                       ))}
-                    </Carousel>
+                    </Carousel> */}
                   </div>
                 );
               })
