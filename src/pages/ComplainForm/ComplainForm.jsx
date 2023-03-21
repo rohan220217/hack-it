@@ -23,7 +23,7 @@ function ComplainForm() {
     caption: "",
     category: "",
     tags: [],
-    ip_address : "192.168.1.1"
+    ip_address: "192.168.1.1",
   });
 
   const [errors, setErrors] = useState({
@@ -44,6 +44,7 @@ function ComplainForm() {
     { value: "pothole", label: "pothole" },
     { value: "sewage", label: "sewage" },
     { value: "water", label: "water" },
+    { value: "none", label: "none" },
   ];
 
   const tagChange = (selectedOption) => {
@@ -53,15 +54,15 @@ function ComplainForm() {
   };
   const categoryChange = (selectedOption) => {
     setValue((prev) => {
-      return { ...prev, category: selectedOption  };
+      return { ...prev, category: selectedOption };
     });
   };
 
   const confirmPost = () => {
-    let newValue = {...value, category : (value?.category || null )}
-    console.log(newValue)
-    dispatch(updateSingleComplain({ value : newValue, id, navigate }))
-  }
+    let newValue = { ...value, category: value?.category || null };
+    console.log(newValue);
+    dispatch(updateSingleComplain({ value: newValue, id, navigate }));
+  };
 
   useEffect(() => {
     dispatch(getSingleComplain({ id, setValue }));
@@ -130,7 +131,7 @@ function ComplainForm() {
         </div>
         <div className={styles.name}>
           <p>Tags: </p>
-          <Select
+          {/* <Select
             defaultValue={value.tags}
             isMulti
             onChange={tagChange}
@@ -152,7 +153,12 @@ function ComplainForm() {
                 fontSize: "1.4rem",
               }),
             }}
-          />
+          /> */}
+          <p>
+            {postState.currentSinglePostDetail.tags
+              .map((t) => `#${t}`)
+              .join(" ")}
+          </p>
 
           <p className={styles.error}>
             {errors && errors["tags"] ? errors["tags"][0] : ""}

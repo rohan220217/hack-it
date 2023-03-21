@@ -76,13 +76,13 @@ function HomePage() {
                     >
                       {m.map((complain, index) => (
                         <>
-                          {/* {JSON.stringify(complain)} */}
+                          {/* {JSON.stringify(complain.post_group.current_status)} */}
                           <ComplainCard
                             key={index}
                             caption={complain.caption}
                             createdAt={complain.createdAt}
                             tags={complain.tags}
-                            postStatus={complain.post_status}
+                            postStatus={complain.post_group.current_status}
                             image={complain.contents}
                             upvotes={complain.post_group.upvotes}
                             downvotes={complain.post_group.downvotes}

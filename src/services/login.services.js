@@ -14,6 +14,10 @@ export const loginRequestApi = async ({ mobile }) => {
     toast.success(res.data.msg);
     return res.data;
   } catch (e) {
+    console.log(e);
+    console.log(e?.response);
+    console.log(e?.response?.data);
+    console.log(e?.response?.data?.msg);
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }
 };

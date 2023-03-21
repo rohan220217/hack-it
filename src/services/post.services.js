@@ -24,18 +24,18 @@ export const getSinglePostRequestApi = async ({ id }) => {
   }
 };
 
-export const getAllPostsRequestApi = async(data) => {
+export const getAllPostsRequestApi = async (data) => {
   try {
-    let query_arr = []
-    for(let key in data){
-      let value = data[key]
-      if(value !== undefined && value !== null){
-        query_arr.push(`${key}=${encodeURIComponent(value)}`)
+    let query_arr = [];
+    for (let key in data) {
+      let value = data[key];
+      if (value !== undefined && value !== null) {
+        query_arr.push(`${key}=${encodeURIComponent(value)}`);
       }
     }
 
-    const queryString = query_arr.join("&")
-    console.log(queryString)
+    const queryString = query_arr.join("&");
+    console.log(queryString);
     const res = await axios.get(`/post?${queryString}`, {
       headers: { ...authHeader() },
     });
@@ -43,7 +43,7 @@ export const getAllPostsRequestApi = async(data) => {
   } catch (e) {
     throw Error(e.response?.data?.msg ?? "Something went wrong");
   }
-}
+};
 export const updateSinglePostRequestApi = async ({ value, id }) => {
   try {
     const res = await axios.put(
@@ -80,6 +80,22 @@ export const getGroupPostRequestApi = async ({ id }) => {
     const res = await axios.get(`/post?pg=${id}`, {
       headers: { ...authHeader() },
     });
+    return res.data;
+  } catch (e) {
+    throw Error(e.response?.data?.msg ?? "Something went wrong");
+  }
+};
+
+export const updateComplainRequestApi = async ({ value, id }) => {
+  try {
+    const res = await axios.put(
+      `/post/${id}/updatestatus`,
+      { ...value },
+      {
+        headers: { ...authHeader() },
+      }
+    );
+    toast.success(res.data.msg);
     return res.data;
   } catch (e) {
     throw Error(e.response?.data?.msg ?? "Something went wrong");

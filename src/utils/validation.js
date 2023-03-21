@@ -16,6 +16,9 @@ const complainFormRule = {
   category: "required|string",
   tags: "required",
 };
+const updateComplainRule = {
+  officer_remarks: "required|string",
+};
 
 // Single validation
 export const loginMobNoSingleFieldValidation = ({ key, value }) => {
@@ -67,6 +70,20 @@ export const complainFormSingleValidation = ({ key, value }) => {
     const validation = new Validator(
       { [key]: value },
       { [key]: complainFormRule[key] }
+    );
+    validationResponse.isValid = validation.passes();
+    if (!validationResponse.isValid) {
+      validationResponse.errors = validation.errors.all();
+    }
+  }
+  return validationResponse;
+};
+export const updateComplainRuleSingleValidation = ({ key, value }) => {
+  const validationResponse = { isValid: true };
+  if (updateComplainRule[key]) {
+    const validation = new Validator(
+      { [key]: value },
+      { [key]: updateComplainRule[key] }
     );
     validationResponse.isValid = validation.passes();
     if (!validationResponse.isValid) {

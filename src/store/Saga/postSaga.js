@@ -6,7 +6,8 @@ import {
   updateSinglePostRequestApi,
   getGroupPostRequestApi,
   getAllPostsRequestApi,
-  voteSinglePostRequestApi
+  voteSinglePostRequestApi,
+  updateComplainRequestApi,
 } from "../../services/post.services";
 import {
   getAllComplainFailed,
@@ -22,6 +23,8 @@ import {
   updateSingleComplainSuccess,
   voteSingleComplainSuccess,
   voteSingleComplainFailed,
+  updateComplainSuccess,
+  updateComplainFailed,
 } from "../Actions/postAction";
 import {
   ADD_POST_REQUEST,
@@ -30,8 +33,9 @@ import {
   GET_ALL_POSTS_REQUEST,
   GET_GROUP_SINGLE_POST_REQUEST,
   GET_SINGLE_POST_REQUEST,
+  UPDATE_COMPLAIN_REQUEST,
   UPDATE_SINGLE_POST_REQUEST,
-  VOTE_SINGLE_POST_REQUEST
+  VOTE_SINGLE_POST_REQUEST,
 } from "../Constants/postTypes";
 
 function* addPostRequest(action) {
@@ -55,9 +59,8 @@ function* getSinglePostRequest(action) {
     action.payload.setValue((prev) => ({
       ...prev,
       caption: data.data.caption,
-      category: data.data.category,
-      // category: { label: data.data.category, value: data.data.category },
-      tags: data.data.tags,
+      category: { value: data.data.category, label: data.data.category },
+      // tags: data.data.tags,
     }));
     yield put(getSingleComplainSuccess(data));
   } catch (error) {
@@ -69,7 +72,7 @@ function* getSinglePostRequest(action) {
 function* voteSinglePostRequest(action) {
   try {
     const data = yield call(voteSinglePostRequestApi, action.payload);
-    console.log("p", action.payload)
+    console.log("p", action.payload);
     yield put(voteSingleComplainSuccess(action.payload));
   } catch (error) {
     toast.error(error.message);
@@ -110,6 +113,19 @@ function* getAllPostsRequest(action) {
   }
 }
 
+function* updateComplainRequest(action) {
+  try {
+    // value: newValue, id, navigate
+    const data = yield call(updateComplainRequestApi, action.payload);
+    console.log(data);
+    action.payload.navigate("/");
+    yield put(updateComplainSuccess(data));
+  } catch (error) {
+    toast.error(error.message);
+    yield put(updateComplainFailed(error));
+  }
+}
+
 function* loginSaga() {
   yield takeEvery(ADD_POST_REQUEST, addPostRequest);
   yield takeEvery(GET_SINGLE_POST_REQUEST, getSinglePostRequest);
@@ -117,6 +133,7 @@ function* loginSaga() {
   yield takeEvery(GET_ALL_POSTS_REQUEST, getAllPostsRequest);
   yield takeEvery(UPDATE_SINGLE_POST_REQUEST, updateSinglePostRequest);
   yield takeEvery(GET_GROUP_SINGLE_POST_REQUEST, getGroupPostRequest);
+  yield takeEvery(UPDATE_COMPLAIN_REQUEST, updateComplainRequest);
 }
 
 export default loginSaga;
