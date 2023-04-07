@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# AI enabled helpdesk system (Sarathi)
+This project has been developed using ReactJS and Capacitor. It involves taking input from users, which can be related to a variety of issues such as potholes, blackout zones, waste, and waterlogging. The input is then processed to generate a caption, category, and related hashtags.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project also includes a comprehensive helpdesk system, designed with a user interface similar to Instagram but with a greater focus on practicality and usefulness. Overall, the project provides an efficient and streamlined way for users to report issues and receive assistance in a timely manner.
 
-## Available Scripts
+# Demo Video ![link](https://www.canva.com/design/DAFdy5KIP5M/hfcZ5aWmRC7LsJ5B-2CenA/watch?utm_content=DAFdy5KIP5M&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
-In the project directory, you can run:
+# Screenshot
+![homepage](https://i.imgur.com/2fO64tT.png)
 
-### `npm start`
+# Installation
+clone this repo and run `npm install` to install all the dependency. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Install the Capacitor CLI locally
+`npm install @capacitor/cli --save-dev`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Initialize Capacitor in your React project
+`npx cap init`
 
-### `npm test`
+## Install the required packages
+`npm install @capacitor/core @capacitor/ios @capacitor/android`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Add the native platforms
+`npx cap add ios`
+`npx cap add android`
 
-### `npm run build`
+At this point you should see a new ios and android folder in your React project.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Those are real native projects!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Contact Us 
+Feel free to reach us from contributors section if you have any doubt. We will be happy to help you!
